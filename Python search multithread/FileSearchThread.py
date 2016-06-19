@@ -1,6 +1,6 @@
 import threading
 import time
-
+from wordSearch import *
 
 
 threadLock = threading.Lock()
@@ -21,19 +21,7 @@ class SearchThread (threading.Thread):
         threadLock.release()
         
  
- #thread for every word       
-class word_SearchThread (threading.Thread):
-    def __init__(self,path ,w):
-        threading.Thread.__init__(self)
-        self.path = path
-        self.list=w
-    def run(self):
-        #print "Starting " + self.name +"-"+ time.ctime(time.time())
-        # Get lock to synchronize threads
-        #threadLock.acquire()
-        w_search(self.path,self.list )
-        # Free lock to release next thread
-        #threadLock.release()      
+ 
 
 ##-------------------------------------------------------------------   
 def search(path,w_search):
@@ -42,28 +30,19 @@ def search(path,w_search):
         for w in w_search:
             t=word_SearchThread(path,w)
             t.start()
-           
+        t.join()   
     except ValueError,IOError:
         print "file could not open!"
                     
 ##-------------------------------------------------------
-def w_search(path,w):
-    try:
-        file=open(path,"r")
-        i=1
-        for line in file:
-            if w in line:
-                print "{0}/[{3}] ({1}): {2}".format(file.name,i,line,w)
-            i+=1
-    except ValueError,IOError:
-        print "file could not open!"
-                    
+
 
 ##########################################################################
 
-words1=["developing","experience" ,"multi"]# raw_input("enter list of words to search FILE 1 (use ' ' between):").split()#
+words1= raw_input("enter list of words to search FILE 1 (use ' ' between):").split()#["developing","experience" ,"multi"]#
 
-words2=["SQL","C++" ,"java","thread"]# raw_input("enter list of words to search FILE 2 (use ' ' between):").split()#
+words2= raw_input("enter list of words to search FILE 2 (use ' ' between):").split()#["SQL","C++" ,"java","thread"]#
+
 #init threads    
 threads=SearchThread(1,"A","cv1.txt",words1),SearchThread(2,"B","cv2.txt",words2)
 
