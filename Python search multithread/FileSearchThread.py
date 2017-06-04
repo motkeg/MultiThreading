@@ -44,7 +44,7 @@ words1= raw_input("enter list of words to search FILE 1 (use ' ' between):").spl
 words2= raw_input("enter list of words to search FILE 2 (use ' ' between):").split()#["SQL","C++" ,"java","thread"]#
 
 #init threads    
-threads=SearchThread(1,"A","cv1.txt",words1),SearchThread(2,"B","cv2.txt",words2)
+threads=SearchThread(1,"A","cv2.txt",words1),SearchThread(2,"B","cv2.txt",words2)
 
 print "------------------------------------START-*-------------------"
 threads[0].start()
